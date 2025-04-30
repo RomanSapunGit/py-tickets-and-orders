@@ -4,7 +4,6 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models import ForeignKey, CASCADE
 
 
 class Genre(models.Model):
@@ -66,9 +65,9 @@ class MovieSession(models.Model):
 
 class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
-    user = ForeignKey(
+    user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=CASCADE,
+        on_delete=models.CASCADE,
         related_name="orders"
     )
 
@@ -86,12 +85,12 @@ class User(AbstractUser):
 class Ticket(models.Model):
     movie_session = models.ForeignKey(
         MovieSession,
-        on_delete=CASCADE,
+        on_delete=models.CASCADE,
         related_name="tickets"
     )
     order = models.ForeignKey(
         Order,
-        on_delete=CASCADE,
+        on_delete=models.CASCADE,
         related_name="tickets"
     )
     row = models.IntegerField()
